@@ -18,7 +18,12 @@ const NavBar = () => {
   };
 
   return (
-    <Navbar bg="light" expand="false" className="mb-3">
+    <Navbar
+      bg="light"
+      variant="light"
+      expand="false"
+      className="mb-3"
+    >
       <Container fluid="lg">
         <Navbar.Brand>
           <LinkContainer style={{ cursor: "pointer" }} to="/">
