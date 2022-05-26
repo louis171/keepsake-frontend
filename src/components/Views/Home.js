@@ -17,56 +17,56 @@ import { getExcerpt } from "../../helpers/getExerpt";
 
 const DUMMY_DATA = [
   {
-    deceasedId: "ncoW3hs9AmhjFddr",
-    deceasedForename: "Phil",
-    deceasedMiddlename: "Hubert",
-    deceasedSurname: "Davidson",
-    deceasedDateOfBirth: "1986-04-23",
-    deceasedDateOfDeath: "2022-05-08",
+    deceasedId: "-sgbhQCqd_WOUn2l",
+    deceasedForename: "David",
+    deceasedMiddlename: "Kenneth",
+    deceasedSurname: "Garcia",
+    deceasedDateOfBirth: "1944-08-27",
+    deceasedDateOfDeath: "2022-04-27",
+    deceasedDetails:
+      "In consequat ex at massa porta auctor. Quisque mollis rutrum magna a finibus. Nullam lacinia erat ac viverra porttitor. Sed pretium, magna nec eleifend ullamcorper, arcu elit ornare lectus, eu ultrices purus est a risus. Pellentesque sit amet lacus at augue maximus pellentesque. In accumsan lacus a pretium volutpat.",
+    deceasedimage: [
+      {
+        deceasedImageId: "hFhqQXcW7HWiN97r",
+        deceasedImagePath:
+          "http://localhost:4000/public/hFhqQXcW7HWiN97r!pexels-andrea-piacquadio-3831612.jpg",
+        deceasedImageName: "pexels-andrea-piacquadio-3831612.jpg",
+      },
+    ],
+  },
+  {
+    deceasedId: "cS0a1SxoiX-8GIPL",
+    deceasedForename: "Jules",
+    deceasedMiddlename: "",
+    deceasedSurname: "Kelly",
+    deceasedDateOfBirth: "1966-04-23",
+    deceasedDateOfDeath: "2022-05-18",
     deceasedDetails:
       "Sed vel augue turpis. Ut vitae congue enim. Nam scelerisque tincidunt tristique. Maecenas id nulla est. Fusce quam lorem, cursus sed bibendum a, vulputate nec elit. Sed porttitor sodales pulvinar. Pellentesque et blandit lorem. Vestibulum maximus vel libero at sagittis.",
     deceasedimage: [
       {
-        deceasedImageId: "tvfzX8eCrzeCq0EZ",
+        deceasedImageId: "JvhsZpvsH3DP24Jd",
         deceasedImagePath:
-          "http://localhost:4000/public/29crdsvOwd1uryyZ!avatar-d6946071babd8fc529587de417f4b03c.jpg",
+          "http://localhost:4000/public/JvhsZpvsH3DP24Jd!avatar-67c27da1ff9f4f182bec46d9e933ff9c.jpg",
         deceasedImageName: "avatar-67c27da1ff9f4f182bec46d9e933ff9c.jpg",
       },
     ],
   },
   {
-    deceasedId: "rwd4Do0cWTujCnju",
-    deceasedForename: "Jerry",
-    deceasedMiddlename: "",
-    deceasedSurname: "Johnson",
-    deceasedDateOfBirth: "1944-11-03",
-    deceasedDateOfDeath: "2022-04-18",
+    deceasedId: "Ov2Db2_TzyZF6k_Q",
+    deceasedForename: "Kevin",
+    deceasedMiddlename: "Darcy",
+    deceasedSurname: "Jones",
+    deceasedDateOfBirth: "1973-11-13",
+    deceasedDateOfDeath: "2022-05-08",
     deceasedDetails:
-      "Aenean justo orci, ullamcorper at congue ut, feugiat ut augue. Nam magna eros, rhoncus sit amet interdum ac, pretium et massa. Vivamus nec magna justo. Curabitur a nunc nec orci cursus fermentum elementum et mauris. Vestibulum eu pellentesque dolor.",
+      "Praesent posuere felis non magna vehicula, vitae aliquam orci sodales. Aliquam erat volutpat. Aliquam erat volutpat. Suspendisse luctus pulvinar dui, cursus accumsan sapien iaculis nec. Donec vestibulum nisi ligula, convallis accumsan diam hendrerit non.",
     deceasedimage: [
       {
-        deceasedImageId: "29crdsvOwd1uryyZ",
+        deceasedImageId: "ScqOTA3dmDaQdohu",
         deceasedImagePath:
-          "http://localhost:4000/public/tvfzX8eCrzeCq0EZ!avatar-67c27da1ff9f4f182bec46d9e933ff9c.jpg",
+          "http://localhost:4000/public/ScqOTA3dmDaQdohu!avatar-d6946071babd8fc529587de417f4b03c.jpg",
         deceasedImageName: "avatar-d6946071babd8fc529587de417f4b03c.jpg",
-      },
-    ],
-  },
-  {
-    deceasedId: "rwd4Do0cWTujCnku",
-    deceasedForename: "David",
-    deceasedMiddlename: "",
-    deceasedSurname: "Jackson",
-    deceasedDateOfBirth: "1976-04-23",
-    deceasedDateOfDeath: "2022-04-25",
-    deceasedDetails:
-      "Quisque mollis pellentesque dictum. Sed ex odio, ultrices eget enim eget, mattis cursus risus. Mauris consectetur ipsum id ultrices viverra. Nunc mollis luctus leo a efficitur. Morbi ligula lectus, consequat fringilla placerat ac, eleifend id metus. Fusce euismod urna ac lacinia mattis. Nulla convallis massa nec nisl posuere congue. Nulla eu venenatis mauris, id luctus ante. Pellentesque ut orci ac leo congue ultricies id vitae est.",
-    deceasedimage: [
-      {
-        deceasedImageId: "3cW7akYoYLOohA_V",
-        deceasedImagePath:
-          "http://localhost:4000/public/3cW7akYoYLOohA_V!pexels-andrea-piacquadio-3831612.jpg",
-        deceasedImageName: "pexels-andrea-piacquadio-3831612.jpg",
       },
     ],
   },
@@ -122,7 +122,7 @@ const Home = () => {
                       {getExcerpt(deceased.deceasedDetails, 100).shortText}
                     </Card.Text>
                     <Button
-                      onClick={() => navigate("/deceased:ncoW3hs9AmhjFddr", { replace: true })}
+                      onClick={() => navigate(`/deceased/${deceased.deceasedId}`)}
                       variant="primary"
                     >
                       Visit memory page
