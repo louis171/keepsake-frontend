@@ -4,19 +4,22 @@ import Home from "./components/Views/Home";
 import About from "./components/Views/About";
 import Login from "./components/Views/Login";
 import Register from "./components/Views/Register";
-import Deceased from "./components/Views/Deceased";
+import Memory from "./components/Views/Memory";
+import NoRouteMatch from "./components/Views/NoRouteMatch";
 
 function App() {
   return (
     <Layout>
       <Routes>
+        <Route index element={<Home />} />
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route path="/deceased" >
-          <Route path=":deceasedId" element={<Deceased />} />
+        <Route path="/memory">
+          <Route path=":deceasedId" element={<Memory />} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="*" element={<NoRouteMatch />} />
       </Routes>
     </Layout>
   );

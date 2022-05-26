@@ -13,7 +13,7 @@ import Button from "react-bootstrap/Button";
 import Nav from "react-bootstrap/Nav";
 import Carousel from "react-bootstrap/Carousel";
 
-import { getExcerpt } from "../../helpers/getExerpt";
+import { getExcerpt } from "../../helpers/helpers";
 
 const DUMMY_DATA = [
   {
@@ -122,7 +122,7 @@ const Home = () => {
                       {getExcerpt(deceased.deceasedDetails, 100).shortText}
                     </Card.Text>
                     <Button
-                      onClick={() => navigate(`/deceased/${deceased.deceasedId}`)}
+                      onClick={() => navigate(`/memory/${deceased.deceasedId}`)}
                       variant="primary"
                     >
                       Visit memory page

@@ -10,3 +10,8 @@ export const getExcerpt = ( str, limit ) => {
     };
     return returnString;
 }
+
+export const sqlDateConvert = ( isoDate ) => {
+    const newDate = new Date(isoDate).toLocaleDateString()
+    return newDate;
+}

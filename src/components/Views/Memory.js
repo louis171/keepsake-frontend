@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { sqlDateConvert } from "../../helpers/helpers";
 import axios from "axios";
 
 import Container from "react-bootstrap/Container";
@@ -12,10 +13,15 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Nav from "react-bootstrap/Nav";
 import Carousel from "react-bootstrap/Carousel";
+import InputGroup from "react-bootstrap/InputGroup";
+import Form from "react-bootstrap/Form";
 
-const Deceased = () => {
+const Memory = () => {
   const [deceasedData, setDeceasedData] = useState([]);
   const [memoryData, setMemoryData] = useState([]);
+  const [filteredMemoryData, setFilteredMemoryData] = useState([]);
+  // States for filters/options
+  const [searchValue, setSearchValue] = useState("");
   let { deceasedId } = useParams();
 
   useEffect(() => {
@@ -33,40 +39,82 @@ const Deceased = () => {
     });
   }, []);
 
+  // useEffect for filtering by search string
+  useEffect(() => {
+    setFilteredMemoryData(
+      memoryData.filter((memory) => {
+        return (
+          memory.memoryForename
+            .toLowerCase()
+            .includes(searchValue.toLowerCase()) ||
+          memory.memorySurname.toLowerCase().includes(searchValue.toLowerCase())
+        );
+      })
+    );
+  }, [memoryData, searchValue]);
+
+  // Sets state for string search
+  const handleSearchChange = (event) => {
+    event.preventDefault();
+    setSearchValue(event.target.value);
+  };
+
   return (
     <Container>
-      <Row>
-        <Col sm={12} md={12} lg={6} className="d-flex mx-auto">
+      <Row className="mb-4">
+        <Col>
           {deceasedData.map((deceased) => (
-            <Card
-              key={deceased.deceasedId}
-              className="w-100 mx-auto border p-2 bg-light shadow-sm mb-4"
-            >
-              <Image
-                fluid
-                rounded
-                src={deceased.deceasedimage[0].deceasedImagePath}
-                className="mx-auto w-75"
-              ></Image>
-              <Card.Body className="text-center">
-                <Card.Title>
-                  {deceased.deceasedForename} {deceased.deceasedMiddlename}{" "}
-                  {deceased.deceasedSurname}
-                </Card.Title>
-                <Card.Text>{deceased.deceasedDetails}</Card.Text>
-              </Card.Body>
-            </Card>
+            <div>
+              <div className="text-center">
+                <h1 className="display-2">
+                  In memory of {deceased.deceasedForename}{" "}
+                  {deceased.deceasedMiddlename} {deceased.deceasedSurname}
+                </h1>
+                <hr className="w-100 my-2" />
+                <h3>
+                  {sqlDateConvert(deceased.deceasedDateOfBirth)}
+                  {" - "}
+                  {sqlDateConvert(deceased.deceasedDateOfDeath)}
+                </h3>
+              </div>
+              <div className="my-4">
+                <div
+                  className="mx-auto w-100"
+                  style={{
+                    height: "25em",
+                    width: "100%",
+                    borderRadius: "2em",
+                    backgroundImage: `url(${deceased.deceasedimage[0].deceasedImagePath})`,
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "center",
+                    backgroundSize: "cover",
+                  }}
+                ></div>
+              </div>
+              <div className="text-center">{deceased.deceasedDetails}</div>
+              <hr className="w-100 my-2" />
+            </div>
           ))}
         </Col>
       </Row>
       <Row>
-        <Col className="text-center">
-          <h1>Memories</h1>
-          <Button>Add Memory</Button>
+        <Col className="d-flex flex-column justify-content-between text-center bg-light rounded border shadow-sm p-4">
+          <h1 className="m-0 p-0 mb-4">Memories</h1>
+          <Button className="mb-4" variant="primary" type="button">
+            Add Memory
+          </Button>
+          <InputGroup>
+            <Form.Control
+              onChange={handleSearchChange}
+              value={searchValue}
+              placeholder="Search by name"
+              aria-label="Search"
+            />
+          </InputGroup>
         </Col>
       </Row>
       <Row>
-        {memoryData.map((memory) => (
+        {filteredMemoryData.map((memory) => (
           <Col sm={12} md={12} lg={4} className="d-flex align-content-stretch">
             <div
               style={{ borderRadius: "2em 2em 0px 0px" }}
@@ -114,4 +162,4 @@ const Deceased = () => {
   );
 };
 
-export default Deceased;
+export default Memory;
