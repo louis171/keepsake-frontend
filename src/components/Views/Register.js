@@ -11,7 +11,7 @@ import Nav from "react-bootstrap/Nav";
 import Form from "react-bootstrap/Form";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 
-const Login = () => {
+const Register = () => {
   const [validated, setValidated] = useState(false);
 
   const handleSubmit = (event) => {
@@ -33,7 +33,23 @@ const Login = () => {
           onSubmit={handleSubmit}
           className="bg-light p-2 border shadow-sm"
         >
-          <h1 className="text-center">Login</h1>
+          <h1 className="text-center">Register</h1>
+          <Form.Group className="mb-3" controlId="formForename">
+            <FloatingLabel controlId="floatingInput" label="First Name">
+              <Form.Control required type="text" placeholder="First name" />
+              <Form.Control.Feedback type="invalid">
+                Please enter your first name.
+              </Form.Control.Feedback>
+            </FloatingLabel>
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formSurname">
+            <FloatingLabel controlId="floatingInput" label="Last Name">
+              <Form.Control required type="text" placeholder="Last name" />
+              <Form.Control.Feedback type="invalid">
+                Please enter your last name.
+              </Form.Control.Feedback>
+            </FloatingLabel>
+          </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <FloatingLabel controlId="floatingInput" label="Email address">
               <Form.Control
@@ -59,10 +75,15 @@ const Login = () => {
             className="mb-3 d-flex justify-content-center"
             controlId="formBasicCheckbox"
           >
-            <Form.Check type="checkbox" label="Remember me" />
+            <Form.Check
+              required
+              label="Agree to terms and conditions"
+              feedback="You must agree before submitting."
+              feedbackType="invalid"
+            />
           </Form.Group>
-          <div className="d-flex justify-content-center">
-            <Button variant="primary" type="submit">
+          <div className="d-grid gap-2">
+            <Button size="lg" variant="primary" type="submit">
               Submit
             </Button>
           </div>
@@ -72,4 +93,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
