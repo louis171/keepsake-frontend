@@ -64,7 +64,7 @@ const Memory = () => {
       <Row className="mb-4">
         <Col>
           {deceasedData.map((deceased) => (
-            <div>
+            <div key={deceased.deceasedId}>
               <div className="text-center">
                 <h1 className="display-2">
                   In memory of {deceased.deceasedForename}{" "}
