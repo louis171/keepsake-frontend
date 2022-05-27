@@ -6,6 +6,8 @@ import Login from "./components/Views/Login";
 import Register from "./components/Views/Register";
 import Memory from "./components/Views/Memory";
 import NoRouteMatch from "./components/Views/NoRouteMatch";
+import Profile from "./components/Views/Profile";
+import ProtectedRoute from "./auth/ProtectedRoutes";
 
 function App() {
   return (
@@ -19,6 +21,15 @@ function App() {
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
         <Route path="*" element={<NoRouteMatch />} />
       </Routes>
     </Layout>

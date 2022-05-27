@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Container from "react-bootstrap/Container";
 import Offcanvas from "react-bootstrap/Offcanvas";
@@ -8,8 +8,10 @@ import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
 import { LinkContainer } from "react-router-bootstrap";
+import { AuthContext } from "../../auth/AuthContext";
 
 const NavBar = () => {
+  const { user } = useContext(AuthContext);
   const [show, setShow] = useState(false);
 
   // Toggles OffCanvas. Used by links to close when a menu option is clicked
@@ -18,12 +20,7 @@ const NavBar = () => {
   };
 
   return (
-    <Navbar
-      bg="light"
-      variant="light"
-      expand="false"
-      className="mb-3"
-    >
+    <Navbar bg="light" variant="light" expand="false" className="mb-3">
       <Container fluid="lg">
         <Navbar.Brand>
           <LinkContainer style={{ cursor: "pointer" }} to="/">
@@ -84,42 +81,50 @@ const NavBar = () => {
                   About
                 </Button>
               </LinkContainer>
-              <LinkContainer
-                onClick={toggleOffCanvasHandler}
-                className="mb-4"
-                to="/login"
-              >
-                <Button size="lg" variant="primary">
-                  Login
-                </Button>
-              </LinkContainer>
-              <LinkContainer
-                onClick={toggleOffCanvasHandler}
-                className="mb-4"
-                to="/register"
-              >
-                <Button size="lg" variant="outline-primary">
-                  Register
-                </Button>
-              </LinkContainer>
-              <LinkContainer
-                onClick={toggleOffCanvasHandler}
-                className="mb-4"
-                to="/profile"
-              >
-                <Button size="lg" variant="primary">
-                  My profile
-                </Button>
-              </LinkContainer>
-              <LinkContainer
-                onClick={toggleOffCanvasHandler}
-                className="mb-4"
-                to="/logout"
-              >
-                <Button size="lg" variant="outline-primary">
-                  Logout
-                </Button>
-              </LinkContainer>
+              {user.auth ? null : (
+                <LinkContainer
+                  onClick={toggleOffCanvasHandler}
+                  className="mb-4"
+                  to="/login"
+                >
+                  <Button size="lg" variant="primary">
+                    Login
+                  </Button>
+                </LinkContainer>
+              )}
+              {user.auth ? null : (
+                <LinkContainer
+                  onClick={toggleOffCanvasHandler}
+                  className="mb-4"
+                  to="/register"
+                >
+                  <Button size="lg" variant="outline-primary">
+                    Register
+                  </Button>
+                </LinkContainer>
+              )}
+              {user.auth ? (
+                <LinkContainer
+                  onClick={toggleOffCanvasHandler}
+                  className="mb-4"
+                  to="/profile"
+                >
+                  <Button size="lg" variant="primary">
+                    My profile
+                  </Button>
+                </LinkContainer>
+              ) : null}
+              {user.auth ? (
+                <LinkContainer
+                  onClick={toggleOffCanvasHandler}
+                  className="mb-4"
+                  to="/logout"
+                >
+                  <Button size="lg" variant="outline-primary">
+                    Logout
+                  </Button>
+                </LinkContainer>
+              ) : null}
 
               <NavDropdown
                 title="Dropdown"

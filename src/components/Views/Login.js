@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -11,17 +11,27 @@ import Nav from "react-bootstrap/Nav";
 import Form from "react-bootstrap/Form";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 
+import { AuthContext } from "../../auth/AuthContext";
+
 const Login = () => {
+  const { userSigninHandler } = useContext(AuthContext);
   const [validated, setValidated] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
+  const [userPassword, setUserPassword] = useState("");
 
-  const handleSubmit = (event) => {
-    const form = event.currentTarget;
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const form = e.currentTarget;
     if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
+      console.log("Form not valid");
+      e.preventDefault();
+      e.stopPropagation();
+    } else {
+      console.log(userEmail + userPassword)
+      console.log("Form valid");
+      setValidated(true);
+      userSigninHandler({ userEmail, userPassword });
     }
-
-    setValidated(true);
   };
 
   return (
@@ -40,6 +50,7 @@ const Login = () => {
                 required
                 type="email"
                 placeholder="name@example.com"
+                onChange={(e) => setUserEmail(e.target.value)}
               />
               <Form.Control.Feedback type="invalid">
                 Please enter your email.
@@ -49,7 +60,12 @@ const Login = () => {
 
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <FloatingLabel controlId="floatingPassword" label="Password">
-              <Form.Control required type="password" placeholder="Password" />
+              <Form.Control
+                onChange={(e) => setUserPassword(e.target.value)}
+                required
+                type="password"
+                placeholder="Password"
+              />
               <Form.Control.Feedback type="invalid">
                 Please enter your password.
               </Form.Control.Feedback>

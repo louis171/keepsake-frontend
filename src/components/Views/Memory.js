@@ -27,7 +27,7 @@ const Memory = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `http://localhost:4000/deceased/?deceasedId=${deceasedId}`,
+      url: `http://localhost:4000/deceased/deceasedId?deceasedId=${deceasedId}`,
     }).then((response) => {
       setDeceasedData(response.data);
     });
