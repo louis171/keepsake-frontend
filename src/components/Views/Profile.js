@@ -115,45 +115,51 @@ const Profile = () => {
             <div
               className="bg-light p-2 mt-4 rounded shadow-sm"
               key={deceased.deceasedId}
-              onClick={() => navigate(`/memory/${deceased.deceasedId}`)}
             >
-              <div className="d-flex align-items-center">
-                <div
-                  className="me-3"
-                  style={{
-                    height: "6em",
-                    width: "6em",
-                    borderRadius: ".5em",
-                    backgroundImage: `url(${deceased.deceasedimage[0].deceasedImagePath})`,
-                    backgroundRepeat: "no-repeat",
-                    backgroundPosition: "center",
-                    backgroundSize: "cover",
-                  }}
-                ></div>
-                <div>
+              <div onClick={() => navigate(`/memory/${deceased.deceasedId}`)}>
+                <div className="d-flex align-items-center">
+                  <div
+                    className="me-3"
+                    style={{
+                      height: "6em",
+                      width: "6em",
+                      borderRadius: ".5em",
+                      backgroundImage: `url(${deceased.deceasedimage[0].deceasedImagePath})`,
+                      backgroundRepeat: "no-repeat",
+                      backgroundPosition: "center",
+                      backgroundSize: "cover",
+                    }}
+                  ></div>
                   <div>
-                    <h4 className="m-0 p-0">
-                      {deceased.deceasedForename} {deceased.deceasedMiddlename}{" "}
-                      {deceased.deceasedSurname}
-                    </h4>
-                    <p
-                      style={{ fontSize: ".875rem" }}
-                      className="m-0 p-0 text-muted"
-                    >
-                      {sqlDateConvert(deceased.deceasedDateOfBirth)}
-                      {" - "}
-                      {sqlDateConvert(deceased.deceasedDateOfDeath)}
-                    </p>
+                    <div>
+                      <h4 className="m-0 p-0">
+                        {deceased.deceasedForename}{" "}
+                        {deceased.deceasedMiddlename} {deceased.deceasedSurname}
+                      </h4>
+                      <p
+                        style={{ fontSize: ".875rem" }}
+                        className="m-0 p-0 text-muted"
+                      >
+                        {sqlDateConvert(deceased.deceasedDateOfBirth)}
+                        {" - "}
+                        {sqlDateConvert(deceased.deceasedDateOfDeath)}
+                      </p>
+                    </div>
                   </div>
                 </div>
+                <div className="my-2">
+                  <p className="text-center" style={{ fontSize: ".85rem" }}>
+                    {deceased.deceasedDetails}
+                  </p>
+                </div>
               </div>
-              <div className="my-2">
-                <p className="text-center" style={{ fontSize: ".85rem" }}>
-                  {deceased.deceasedDetails}
-                </p>
-              </div>
-              <div className="d-flex justify-content-around">
-                <Button variant="primary">
+
+              <div className="d-flex justify-content-center">
+                <Button
+                  style={{ borderRadius: ".25em 0 0 .25em" }}
+                  as={Col}
+                  variant="primary"
+                >
                   <svg
                     width="32"
                     height="32"
@@ -171,7 +177,11 @@ const Profile = () => {
                     />
                   </svg>
                 </Button>
-                <Button variant="danger">
+                <Button
+                  style={{ borderRadius: "0 .25em .25em 0" }}
+                  as={Col}
+                  variant="danger"
+                >
                   <svg
                     width="32"
                     height="32"

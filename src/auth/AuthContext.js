@@ -20,7 +20,6 @@ const AuthContextProvider = (props) => {
   const navigate = useNavigate();
 
   const userSigninHandler = ({ userEmail, userPassword }) => {
-    console.log("Signing in user");
     axios
       .post(
         "http://localhost:4000/auth/signin",
@@ -31,7 +30,6 @@ const AuthContextProvider = (props) => {
         { withCredentials: true }
       )
       .then((res) => {
-        console.log(res.status);
         setUser({
           userForename: res.data.user.userForename,
           userSurname: res.data.user.userSurname,

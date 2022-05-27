@@ -23,12 +23,9 @@ const Login = () => {
     e.preventDefault();
     const form = e.currentTarget;
     if (form.checkValidity() === false) {
-      console.log("Form not valid");
       e.preventDefault();
       e.stopPropagation();
     } else {
-      console.log(userEmail + userPassword)
-      console.log("Form valid");
       setValidated(true);
       userSigninHandler({ userEmail, userPassword });
     }
