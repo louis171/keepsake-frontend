@@ -8,6 +8,7 @@ import Memory from "./components/Views/Memory";
 import NoRouteMatch from "./components/Views/NoRouteMatch";
 import Profile from "./components/Views/Profile";
 import ProtectedRoute from "./auth/ProtectedRoutes";
+import Logout from "./components/Views/Logout";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path=":deceasedId" element={<Memory />} />
         </Route>
         <Route path="/login" element={<Login />} />
+        <Route path="/logout" element={<Logout />} />
         <Route path="/register" element={<Register />} />
 
         <Route

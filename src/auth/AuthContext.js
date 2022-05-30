@@ -30,6 +30,7 @@ const AuthContextProvider = (props) => {
         { withCredentials: true }
       )
       .then((res) => {
+        console.log(res)
         setUser({
           userForename: res.data.user.userForename,
           userSurname: res.data.user.userSurname,
@@ -44,7 +45,7 @@ const AuthContextProvider = (props) => {
   const userSignOutHandler = () => {
     console.log("Signing out user");
     axios
-      .post("http://localhost:4000/auth/signout")
+      .post("http://localhost:4000/auth/signout", {}, { withCredentials: true })
       .then((res) => (res.status == 200 ? navigate("/") : navigate("/logout")))
       .then(
         setUser({

@@ -4,7 +4,7 @@ import Spinner from "react-bootstrap/Spinner";
 
 const Loading = () => {
   return (
-    <main className="position-fixed d-flex w-100 h-100 m-0 p-0 justify-content-center align-items-center">
+    <main style={{ marginTop: "-56px" }} className="position-fixed d-flex w-100 h-100 m-0 p-0 justify-content-center align-items-center">
       <div className="m-0 p-0 text-center">
         <h1 style={{ letterSpacing: ".5rem" }} className="m-0 p-0 display-1">
           <span style={{ fontWeight: "bold" }}>Keep</span>sake

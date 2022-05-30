@@ -32,56 +32,58 @@ const Login = () => {
   };
 
   return (
-    <Row className="h-100">
-      <Col className="m-auto">
-        <Form
-          noValidate
-          validated={validated}
-          onSubmit={handleSubmit}
-          className="bg-light p-2 border shadow-sm"
-        >
-          <h1 className="text-center">Login</h1>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <FloatingLabel controlId="floatingInput" label="Email address">
-              <Form.Control
-                required
-                type="email"
-                placeholder="name@example.com"
-                onChange={(e) => setUserEmail(e.target.value)}
-              />
-              <Form.Control.Feedback type="invalid">
-                Please enter your email.
-              </Form.Control.Feedback>
-            </FloatingLabel>
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="formBasicPassword">
-            <FloatingLabel controlId="floatingPassword" label="Password">
-              <Form.Control
-                onChange={(e) => setUserPassword(e.target.value)}
-                required
-                type="password"
-                placeholder="Password"
-              />
-              <Form.Control.Feedback type="invalid">
-                Please enter your password.
-              </Form.Control.Feedback>
-            </FloatingLabel>
-          </Form.Group>
-          <Form.Group
-            className="mb-3 d-flex justify-content-center"
-            controlId="formBasicCheckbox"
+    <Container style={{ marginTop: "-56px" }} fluid="lg" className="position-fixed d-flex w-100 h-100 justify-content-center align-items-center">
+      <Row className="w-100">
+        <Col className="w-100">
+          <Form
+            noValidate
+            validated={validated}
+            onSubmit={handleSubmit}
+            className="bg-light p-2 border shadow-sm"
           >
-            <Form.Check type="checkbox" label="Remember me" />
-          </Form.Group>
-          <div className="d-flex justify-content-center">
-            <Button variant="primary" type="submit">
-              Submit
-            </Button>
-          </div>
-        </Form>
-      </Col>
-    </Row>
+            <h1 className="text-center">Login</h1>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <FloatingLabel controlId="floatingInput" label="Email address">
+                <Form.Control
+                  required
+                  type="email"
+                  placeholder="name@example.com"
+                  onChange={(e) => setUserEmail(e.target.value)}
+                />
+                <Form.Control.Feedback type="invalid">
+                  Please enter your email.
+                </Form.Control.Feedback>
+              </FloatingLabel>
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <FloatingLabel controlId="floatingPassword" label="Password">
+                <Form.Control
+                  onChange={(e) => setUserPassword(e.target.value)}
+                  required
+                  type="password"
+                  placeholder="Password"
+                />
+                <Form.Control.Feedback type="invalid">
+                  Please enter your password.
+                </Form.Control.Feedback>
+              </FloatingLabel>
+            </Form.Group>
+            <Form.Group
+              className="mb-3 d-flex justify-content-center"
+              controlId="formBasicCheckbox"
+            >
+              <Form.Check type="checkbox" label="Remember me" />
+            </Form.Group>
+            <div className="d-flex justify-content-center">
+              <Button variant="primary" type="submit">
+                Submit
+              </Button>
+            </div>
+          </Form>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

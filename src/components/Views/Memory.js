@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { sqlDateConvert } from "../../helpers/helpers";
 import axios from "axios";
@@ -15,14 +16,17 @@ import Nav from "react-bootstrap/Nav";
 import Carousel from "react-bootstrap/Carousel";
 import InputGroup from "react-bootstrap/InputGroup";
 import Form from "react-bootstrap/Form";
+import { AuthContext } from "../../auth/AuthContext";
 
 const Memory = () => {
+  const { user } = useContext(AuthContext);
   const [deceasedData, setDeceasedData] = useState([]);
   const [memoryData, setMemoryData] = useState([]);
   const [filteredMemoryData, setFilteredMemoryData] = useState([]);
   // States for filters/options
   const [searchValue, setSearchValue] = useState("");
   let { deceasedId } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios({
@@ -61,6 +65,34 @@ const Memory = () => {
 
   return (
     <Container>
+      <Row>
+        <Col>
+          {user.auth ? (
+            <Button
+              onClick={() => navigate(-1)}
+              variant="secondary"
+              className="p-1 d-flex justify-content-around align-items-center"
+            >
+              <svg
+                width="32"
+                height="32"
+                viewBox="0 0 32 32"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M7 15H27C27.2652 15 27.5196 15.1054 27.7071 15.2929C27.8946 15.4804 28 15.7348 28 16C28 16.2652 27.8946 16.5196 27.7071 16.7071C27.5196 16.8946 27.2652 17 27 17H7C6.73478 17 6.48043 16.8946 6.29289 16.7071C6.10536 16.5196 6 16.2652 6 16C6 15.7348 6.10536 15.4804 6.29289 15.2929C6.48043 15.1054 6.73478 15 7 15Z"
+                  fill="white"
+                />
+                <path
+                  d="M7.41396 16L15.708 24.292C15.8957 24.4798 16.0012 24.7345 16.0012 25C16.0012 25.2656 15.8957 25.5202 15.708 25.708C15.5202 25.8958 15.2655 26.0013 15 26.0013C14.7344 26.0013 14.4797 25.8958 14.292 25.708L5.29196 16.708C5.19883 16.6151 5.12494 16.5048 5.07453 16.3833C5.02412 16.2618 4.99817 16.1315 4.99817 16C4.99817 15.8685 5.02412 15.7382 5.07453 15.6167C5.12494 15.4953 5.19883 15.3849 5.29196 15.292L14.292 6.29201C14.4797 6.10424 14.7344 5.99875 15 5.99875C15.2655 5.99875 15.5202 6.10424 15.708 6.29201C15.8957 6.47979 16.0012 6.73446 16.0012 7.00001C16.0012 7.26556 15.8957 7.52024 15.708 7.70801L7.41396 16Z"
+                  fill="white"
+                />
+              </svg>
+            </Button>
+          ) : null}
+        </Col>
+      </Row>
       <Row className="mb-4">
         <Col>
           {deceasedData.map((deceased) => (
@@ -115,10 +147,15 @@ const Memory = () => {
       </Row>
       <Row>
         {filteredMemoryData.map((memory) => (
-          <Col sm={12} md={12} lg={4} className="d-flex align-content-stretch">
+          <Col
+            key={memory.memoryId}
+            sm={12}
+            md={12}
+            lg={4}
+            className="d-flex align-content-stretch"
+          >
             <div
               style={{ borderRadius: "2em 2em 0px 0px" }}
-              key={memory.memoryId}
               className="d-flex flex-column w-100 mx-auto my-4 bg-light border shadow-sm justify-content-between"
             >
               <div
