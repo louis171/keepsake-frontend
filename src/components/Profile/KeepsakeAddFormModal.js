@@ -8,9 +8,13 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 
 import { AuthContext } from "../../auth/AuthContext";
+import { AlertContext } from "../../Alerts/AlertContext";
+
+import GlobalToast from "../Alert/GlobalToast";
 
 const KeepsakeAddFormModal = (props) => {
   const { user } = useContext(AuthContext);
+  const { setToast } = useContext(AlertContext);
 
   const [modalShow, setModalShow] = useState(false);
   // States for user input
@@ -57,10 +61,24 @@ const KeepsakeAddFormModal = (props) => {
         )
         .then((res) => {
           console.log(res);
+          setToast({
+            title: "Success",
+            body: "Added Keepsake",
+            show: true,
+            variant: "success",
+          });
           setModalShow(false);
           props.setRefresh(true);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          setToast({
+            title: "Failed",
+            body: "User action failed",
+            show: true,
+            variant: "danger",
+          });
+          console.log(err);
+        });
     }
   };
 
@@ -77,6 +95,7 @@ const KeepsakeAddFormModal = (props) => {
 
   return (
     <>
+      <GlobalToast />
       <Button
         className="d-grid"
         size="lg"

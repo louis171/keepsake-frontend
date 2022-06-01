@@ -7,15 +7,20 @@ import axios from "axios";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
 
 import Loading from "./Loading";
-import KeepsakeAddFormModal from "../Modal/KeepsakeAddFormModal";
+import KeepsakeAddFormModal from "../Profile/KeepsakeAddFormModal";
 import { AuthContext } from "../../auth/AuthContext";
+import { AlertContext } from "../../Alerts/AlertContext";
 import MemoryCreationPrompt from "../Profile/MemoryCreationPrompt";
 import KeepsakeProfileCard from "../Profile/KeepsakeProfileCard";
 
+import GlobalToast from "../Alert/GlobalToast";
+
 const Profile = () => {
   const { user } = useContext(AuthContext);
+  const { setToast } = useContext(AlertContext);
   const [isLoading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState([]);
   const [deceasedUserData, setDeceasedUserData] = useState([]);
@@ -59,6 +64,17 @@ const Profile = () => {
 
   return (
     <>
+      <Button
+        onClick={() => setToast({
+          title: "Success",
+          body: "Wow",
+          show: true,
+          variant: "success",
+        })}
+      >
+        Show
+      </Button>
+      <GlobalToast />
       <Container>
         <Row>
           <Col sm={12} md={12} lg={6}>
@@ -94,7 +110,10 @@ const Profile = () => {
         {deceasedUserData.length == 0 ? (
           <MemoryCreationPrompt />
         ) : (
-          <KeepsakeProfileCard deceasedUserData={filteredKeepsakes} />
+          <KeepsakeProfileCard
+            setFilteredKeepsakes={setFilteredKeepsakes}
+            filteredKeepsakes={filteredKeepsakes}
+          />
         )}
       </Container>
     </>

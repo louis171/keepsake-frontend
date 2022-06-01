@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import Row from "react-bootstrap/Row";
@@ -13,6 +14,7 @@ import { AuthContext } from "../../auth/AuthContext";
 const MemoryAddFormModal = (props) => {
   const { user } = useContext(AuthContext);
   let { deceasedId } = useParams();
+  const navigate = useNavigate();
 
   const [modalShow, setModalShow] = useState(false);
   // States for user input
@@ -76,7 +78,10 @@ const MemoryAddFormModal = (props) => {
         size="lg"
         style={{ width: "100%" }}
         variant="primary"
-        onClick={() => setModalShow(true)}
+        // Checks for auth status. If auth open the memory add modal. If !auth then navigate to login page
+        onClick={
+          user.auth ? () => setModalShow(true) : () => navigate("/login")
+        }
       >
         Add Memory
       </Button>

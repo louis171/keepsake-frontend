@@ -6,17 +6,40 @@ import { sqlDateConvert } from "../../helpers/helpers";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
+import axios from "axios";
 
 const KeepsakeProfileCard = (props) => {
   // Destructuring props
-  const { deceasedUserData } = props;
+  const { filteredKeepsakes } = props;
 
   const navigate = useNavigate();
+
+  const deleteKeepsakeHandler = (keepsake) => {
+    const value = filteredKeepsakes.filter((filteredKeepsake) => {
+      return filteredKeepsake.deceasedId !== keepsake.deceasedId;
+    });
+    props.setFilteredKeepsakes(value);
+    axios
+      .delete(
+        `http://localhost:4000/deceased/delete?deceasedId=${keepsake.deceasedId}`
+      )
+      .then((res) => {
+        if (res.status == 200) {
+          // Show success modal
+        } else if (res.status >= 400) {
+          // Show failed modal
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        // Show error modal
+      });
+  };
 
   return (
     <Row>
       <Col>
-        {deceasedUserData.map((deceased) => (
+        {filteredKeepsakes.map((deceased) => (
           <div
             className="bg-light p-2 mt-4 rounded shadow-sm"
             key={deceased.deceasedId}
@@ -94,6 +117,7 @@ const KeepsakeProfileCard = (props) => {
                 </svg>
               </Button>
               <Button
+                onClick={() => deleteKeepsakeHandler(deceased)}
                 style={{ borderRadius: "0 .25em .25em 0" }}
                 as={Col}
                 variant="danger"

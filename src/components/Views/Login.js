@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -18,6 +19,8 @@ const Login = () => {
   const [validated, setValidated] = useState(false);
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
+
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -53,6 +56,7 @@ const Login = () => {
                   type="email"
                   placeholder="name@example.com"
                   onChange={(e) => setUserEmail(e.target.value)}
+                  value={userEmail}
                 />
                 <Form.Control.Feedback type="invalid">
                   Please enter your email.
@@ -64,6 +68,7 @@ const Login = () => {
               <FloatingLabel controlId="floatingPassword" label="Password">
                 <Form.Control
                   onChange={(e) => setUserPassword(e.target.value)}
+                  value={userPassword}
                   required
                   type="password"
                   placeholder="Password"
@@ -83,6 +88,14 @@ const Login = () => {
               <Button variant="primary" type="submit">
                 Submit
               </Button>
+            </div>
+            <div onClick={() => navigate('/register')} className="text-center mt-2">
+              <p className="m-0 p-0 text-muted">
+                Don't have an account?{" "}
+                <span className="text-decoration-underline text-primary">
+                  Register
+                </span>
+              </p>
             </div>
           </Form>
         </Col>
