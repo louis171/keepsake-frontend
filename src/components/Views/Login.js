@@ -32,7 +32,11 @@ const Login = () => {
   };
 
   return (
-    <Container style={{ marginTop: "-56px" }} fluid="lg" className="position-fixed d-flex w-100 h-100 justify-content-center align-items-center">
+    <Container
+      style={{ height: "calc(100% - 72px)" }}
+      fluid="lg"
+      className="position-fixed d-flex w-100 justify-content-center align-items-center"
+    >
       <Row className="w-100">
         <Col className="w-100">
           <Form
