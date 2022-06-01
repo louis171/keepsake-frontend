@@ -1,36 +1,24 @@
 import React, { useState, useContext } from "react";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 
-import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Image from "react-bootstrap/Image";
-import Tab from "react-bootstrap/Tab";
-import Tabs from "react-bootstrap/Tabs";
-import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
-import Nav from "react-bootstrap/Nav";
-import Carousel from "react-bootstrap/Carousel";
-import InputGroup from "react-bootstrap/InputGroup";
 import Form from "react-bootstrap/Form";
-import Pagination from "react-bootstrap/Pagination";
-import Dropdown from "react-bootstrap/Dropdown";
-import DropdownButton from "react-bootstrap/DropdownButton";
 import Modal from "react-bootstrap/Modal";
 
 import { AuthContext } from "../../auth/AuthContext";
 
-const MemoryFormModal = (props) => {
+const MemoryAddFormModal = (props) => {
   const { user } = useContext(AuthContext);
+  let { deceasedId } = useParams();
 
   const [modalShow, setModalShow] = useState(false);
   // States for user input
-  const [deceasedForename, setDeceasedForename] = useState("");
-  const [deceasedMiddlename, setDeceasedMiddlename] = useState("");
-  const [deceasedSurname, setDeceasedSurname] = useState("");
-  const [deceasedDateOfBirth, setDeceasedDateOfBirth] = useState("");
-  const [deceasedDateOfDeath, setDeceasedDateOfDeath] = useState("");
-  const [deceasedDetails, setDeceasedDetails] = useState("");
+  const [memoryForename, setMemoryForename] = useState("");
+  const [memorySurname, setMemorySurname] = useState("");
+  const [memoryBody, setMemoryBody] = useState("");
   const [userImage, setUserImage] = useState({ image: null });
 
   const [validated, setValidated] = useState(false);
@@ -50,19 +38,14 @@ const MemoryFormModal = (props) => {
     } else {
       setValidated(true);
       const formData = new FormData();
-      const birthDateTime = new Date(deceasedDateOfBirth).toISOString();
-      const deathDateTime = new Date(deceasedDateOfDeath).toISOString();
       formData.append("userImageUpload", userImage.image);
-      formData.append("deceasedForename", deceasedForename);
-      formData.append("deceasedMiddlename", deceasedMiddlename);
-      formData.append("deceasedSurname", deceasedSurname);
-      formData.append("deceasedDateOfBirth", birthDateTime);
-      formData.append("deceasedDateOfDeath", deathDateTime);
-      formData.append("deceasedDetails", deceasedDetails);
+      formData.append("memoryForename", memoryForename);
+      formData.append("memorySurname", memorySurname);
+      formData.append("memoryBody", memoryBody);
 
       axios
         .post(
-          `http://localhost:4000/deceased/add?deceasedUserId=${user.userId}`,
+          `http://localhost:4000/memory/add?deceasedId=${deceasedId}`,
           formData,
           { withCredentials: true }
         )
@@ -90,11 +73,12 @@ const MemoryFormModal = (props) => {
     <>
       <Button
         className="d-grid"
+        size="lg"
         style={{ width: "100%" }}
         variant="primary"
         onClick={() => setModalShow(true)}
       >
-        Add Keepsake
+        Add Memory
       </Button>
       <Modal
         size="lg"
@@ -104,7 +88,7 @@ const MemoryFormModal = (props) => {
         aria-labelledby="userDeceasedFormModal"
       >
         <Modal.Header closeButton>
-          <Modal.Title id="userDeceasedFormModal">Add Keepsake</Modal.Title>
+          <Modal.Title id="userDeceasedFormModal">Add Memory</Modal.Title>
         </Modal.Header>
         <Form
           noValidate
@@ -124,27 +108,11 @@ const MemoryFormModal = (props) => {
             >
               <Form.Label>Forename</Form.Label>
               <Form.Control
-                onChange={(e) => setDeceasedForename(e.target.value)}
-                value={deceasedForename}
+                onChange={(e) => setMemoryForename(e.target.value)}
+                value={memoryForename}
                 required
                 type="text"
                 placeholder="Forename"
-              />
-            </Form.Group>
-            <Form.Group
-              as={Col}
-              sm={12}
-              md={12}
-              lg={4}
-              className="mb-2"
-              controlId="formMiddlename"
-            >
-              <Form.Label>Middlename</Form.Label>
-              <Form.Control
-                onChange={(e) => setDeceasedMiddlename(e.target.value)}
-                value={deceasedMiddlename}
-                type="text"
-                placeholder="Middlename"
               />
             </Form.Group>
             <Form.Group
@@ -157,45 +125,10 @@ const MemoryFormModal = (props) => {
             >
               <Form.Label>Surname</Form.Label>
               <Form.Control
-                onChange={(e) => setDeceasedSurname(e.target.value)}
-                value={deceasedSurname}
-                required
+                onChange={(e) => setMemorySurname(e.target.value)}
+                value={memorySurname}
                 type="text"
                 placeholder="Surname"
-              />
-            </Form.Group>
-          </Row>
-          <Row className="mb-2">
-            <Form.Group
-              as={Col}
-              sm={12}
-              md={12}
-              lg={6}
-              className="mb-2"
-              controlId="formDateOfBirth"
-            >
-              <Form.Label>Date of Birth</Form.Label>
-              <Form.Control
-                onChange={(e) => setDeceasedDateOfBirth(e.target.value)}
-                value={deceasedDateOfBirth}
-                required
-                type="date"
-              />
-            </Form.Group>
-            <Form.Group
-              as={Col}
-              sm={12}
-              md={12}
-              lg={6}
-              className="mb-2"
-              controlId="formDateOfDeath"
-            >
-              <Form.Label>Date of Death</Form.Label>
-              <Form.Control
-                onChange={(e) => setDeceasedDateOfDeath(e.target.value)}
-                value={deceasedDateOfDeath}
-                required
-                type="date"
               />
             </Form.Group>
           </Row>
@@ -244,13 +177,13 @@ const MemoryFormModal = (props) => {
               className="mb-2"
               controlId="formDetails"
             >
-              <Form.Label>Your message</Form.Label>
+              <Form.Label>Your memory</Form.Label>
               <Form.Control
-                onChange={(e) => setDeceasedDetails(e.target.value)}
-                value={deceasedDetails}
+                onChange={(e) => setMemoryBody(e.target.value)}
+                value={memoryBody}
                 required
                 as="textarea"
-                placeholder="Some words about the person who you are creating the Keepsake for"
+                placeholder="Your memory of the dearly departed"
               />
             </Form.Group>
           </Row>
@@ -268,4 +201,4 @@ const MemoryFormModal = (props) => {
   );
 };
 
-export default MemoryFormModal;
+export default MemoryAddFormModal;

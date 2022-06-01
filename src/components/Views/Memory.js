@@ -17,6 +17,7 @@ import Carousel from "react-bootstrap/Carousel";
 import InputGroup from "react-bootstrap/InputGroup";
 import Form from "react-bootstrap/Form";
 import { AuthContext } from "../../auth/AuthContext";
+import MemoryAddFormModal from "../Memory/MemoryAddFormModal";
 
 const Memory = () => {
   const { user } = useContext(AuthContext);
@@ -25,8 +26,11 @@ const Memory = () => {
   const [filteredMemoryData, setFilteredMemoryData] = useState([]);
   // States for filters/options
   const [searchValue, setSearchValue] = useState("");
+  // Gets deceasedId from URL
   let { deceasedId } = useParams();
   const navigate = useNavigate();
+
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
     axios({
@@ -40,8 +44,9 @@ const Memory = () => {
       url: `http://localhost:4000/memory/?deceasedId=${deceasedId}`,
     }).then((response) => {
       setMemoryData(response.data);
+      setRefresh(false);
     });
-  }, []);
+  }, [refresh]);
 
   // useEffect for filtering by search string
   useEffect(() => {
@@ -130,12 +135,10 @@ const Memory = () => {
         </Col>
       </Row>
       <Row>
-        <Col className="d-flex flex-column justify-content-between text-center bg-light rounded border shadow-sm p-4">
+        <Col className="d-flex flex-column justify-content-between text-center bg-light rounded border shadow-sm p-2">
           <h1 className="m-0 p-0 mb-4">Memories</h1>
-          <Button className="mb-4" variant="primary" type="button">
-            Add Memory
-          </Button>
-          <InputGroup>
+          <MemoryAddFormModal setRefresh={setRefresh} />
+          <InputGroup className="mt-4">
             <Form.Control
               onChange={handleSearchChange}
               value={searchValue}
