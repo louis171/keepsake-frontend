@@ -76,7 +76,8 @@ const Home = () => {
     <Container fluid="lg" className="mt-4">
       <Row className="d-block h-100 d-md-flex mb-5">
         <Col className="h-100 m-auto mb-4 d-md-block">
-          <Image style={{ borderRadius: "4rem" }}
+          <Image
+            style={{ borderRadius: "4rem" }}
             className="w-100"
             src="https://images.pexels.com/photos/1807891/pexels-photo-1807891.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
           ></Image>
@@ -93,7 +94,7 @@ const Home = () => {
       </Row>
       <Row>
         <Col>
-          <h2 className="text-center">Recent memories</h2>
+          <h2 className="text-center">Recent Keepsakes</h2>
           <Carousel variant="dark">
             {deceasedData.map((deceased) => (
               <Carousel.Item key={deceased.deceasedId}>
@@ -122,7 +123,7 @@ const Home = () => {
                       onClick={() => navigate(`/memory/${deceased.deceasedId}`)}
                       variant="primary"
                     >
-                      Visit memory page
+                      Visit Keepsake
                     </Button>
                   </Card.Body>
                 </Card>
@@ -132,35 +133,35 @@ const Home = () => {
         </Col>
       </Row>
       <Row className="my-4 py-3 bg-light border shadow-sm">
-        <Col>
-          <div className="mb-5">
+        <Col sm={12} md={12} lg={6}>
+          <div className="mb-4">
             <div>
               <h2 className="display-3">
                 What is <span style={{ fontWeight: "bold" }}>Keep</span>sake?
               </h2>
             </div>
             <div>
-              <p>
+              <p className="lead">
                 Keepsake offers a place to store your loved one cherished
                 memories and condolences from people all over the world
               </p>
             </div>
           </div>
-          <div className="text-center mb-4">
-            <h3>Get started by creating your own memory page today</h3>
+        </Col>
+        <Col className="text-center justify-content-center" sm={12} md={12} lg={12}>
+          <div className="mb-4">
+            <h3>Get started by creating your own Keepsake today</h3>
           </div>
-          <div className="d-grid gap-2">
-            <LinkContainer to="/register">
-              <Button size="lg" variant="primary">
-                Get started
-              </Button>
-            </LinkContainer>
-          </div>
+          <LinkContainer to="/register">
+            <Button className="w-50" size="lg" variant="primary">
+              Get started
+            </Button>
+          </LinkContainer>
         </Col>
       </Row>
       <Row>
-        <Col>
-          <h2 className="text-center">Search for memories</h2>
+        <Col sm={12} md={12} lg={6} className="mx-lg-auto">
+          <h3 className="text-center">Search for Keepsakes</h3>
           <InputGroup>
             <Form.Control
               onChange={handleSearchChange}
@@ -172,9 +173,12 @@ const Home = () => {
         </Col>
       </Row>
       <Row>
-        <Col>
+        <Col sm={12} md={12} lg={6} className="mx-lg-auto">
           {filteredDeceasedData.map((deceased) => (
-            <div key={deceased.deceasedId} onClick={() => navigate(`/memory/${deceased.deceasedId}`)}>
+            <div
+              key={deceased.deceasedId}
+              onClick={() => navigate(`/memory/${deceased.deceasedId}`)}
+            >
               <div className="d-flex align-items-center">
                 <div
                   className="mt-2 me-2"
