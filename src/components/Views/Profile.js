@@ -64,16 +64,6 @@ const Profile = () => {
 
   return (
     <>
-      <Button
-        onClick={() => setToast({
-          title: "Success",
-          body: "Wow",
-          show: true,
-          variant: "success",
-        })}
-      >
-        Show
-      </Button>
       <GlobalToast />
       <Container>
         <Row>

@@ -129,6 +129,17 @@ const Register = () => {
                 Submit
               </Button>
             </div>
+            <div
+              onClick={() => navigate("/login")}
+              className="text-center mt-2"
+            >
+              <p className="m-0 p-0 text-muted">
+                Already have an account?{" "}
+                <span className="text-decoration-underline text-primary">
+                  Login
+                </span>
+              </p>
+            </div>
           </Form>
         </Col>
       </Row>

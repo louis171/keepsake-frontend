@@ -10,8 +10,6 @@ import Modal from "react-bootstrap/Modal";
 import { AuthContext } from "../../auth/AuthContext";
 import { AlertContext } from "../../Alerts/AlertContext";
 
-import GlobalToast from "../Alert/GlobalToast";
-
 const KeepsakeAddFormModal = (props) => {
   const { user } = useContext(AuthContext);
   const { setToast } = useContext(AlertContext);
@@ -60,7 +58,6 @@ const KeepsakeAddFormModal = (props) => {
           { withCredentials: true }
         )
         .then((res) => {
-          console.log(res);
           setToast({
             title: "Success",
             body: "Added Keepsake",
@@ -95,7 +92,6 @@ const KeepsakeAddFormModal = (props) => {
 
   return (
     <>
-      <GlobalToast />
       <Button
         className="d-grid"
         size="lg"

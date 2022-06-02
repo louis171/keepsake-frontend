@@ -10,9 +10,12 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 
 import { AuthContext } from "../../auth/AuthContext";
+import { AlertContext } from "../../Alerts/AlertContext";
 
 const MemoryAddFormModal = (props) => {
   const { user } = useContext(AuthContext);
+  const { setToast } = useContext(AlertContext);
+
   let { deceasedId } = useParams();
   const navigate = useNavigate();
 
@@ -52,11 +55,24 @@ const MemoryAddFormModal = (props) => {
           { withCredentials: true }
         )
         .then((res) => {
-          console.log(res);
+          setToast({
+            title: "Success",
+            body: "Added memory",
+            show: true,
+            variant: "success",
+          });
           setModalShow(false);
           props.setRefresh(true);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          console.log(err);
+          setToast({
+            title: "Failed",
+            body: "User action failed",
+            show: true,
+            variant: "danger",
+          });
+        });
     }
   };
 
