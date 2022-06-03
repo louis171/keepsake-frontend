@@ -36,12 +36,11 @@ const Login = () => {
 
   return (
     <Container
-      style={{ height: "calc(100% - 72px)" }}
-      fluid="lg"
-      className="position-fixed d-flex w-100 justify-content-center align-items-center"
+      style={{ height: "calc(100vh - 72px)" }}
+      className="d-flex w-100 justify-content-center align-items-center"
     >
       <Row className="w-100">
-        <Col className="w-100">
+        <Col sm={12} md={12} lg={6} className="m-lg-auto">
           <Form
             noValidate
             validated={validated}

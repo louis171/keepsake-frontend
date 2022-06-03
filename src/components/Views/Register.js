@@ -4,12 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Image from "react-bootstrap/Image";
-import Tab from "react-bootstrap/Tab";
-import Tabs from "react-bootstrap/Tabs";
-import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
-import Nav from "react-bootstrap/Nav";
 import Form from "react-bootstrap/Form";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 
@@ -40,19 +35,19 @@ const Register = () => {
           userPassword: userPassword,
         })
         .then((res) => {
-          res.status == 201 ? navigate("/login") : navigate("/register");
+          res.status === 201 ? navigate("/login") : navigate("/register");
         });
     }
   };
 
   return (
     <Container
-      style={{ height: "calc(100% - 72px)" }}
-      fluid="lg"
-      className="position-fixed d-flex w-100 justify-content-center align-items-center"
+    style={{ height: "calc(100vh - 72px)" }}
+    fluid='lg'
+    className="d-flex w-100 justify-content-center align-items-center"
     >
       <Row className="w-100">
-        <Col className="w-100">
+        <Col sm={12} md={12} lg={6} className="m-lg-auto">
           <Form
             noValidate
             validated={validated}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { sqlDateConvert } from "../../helpers/helpers";
 import axios from "axios";
@@ -84,7 +84,7 @@ const Memory = () => {
                   <div
                     className="mx-auto w-100"
                     style={{
-                      height: "25em",
+                      height: "20em",
                       width: "100%",
                       borderRadius: "2em",
                       backgroundImage: `url(${deceased.deceasedimage[0].deceasedImagePath})`,

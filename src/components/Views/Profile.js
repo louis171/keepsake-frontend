@@ -7,12 +7,10 @@ import axios from "axios";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
 
 import Loading from "./Loading";
 import KeepsakeAddFormModal from "../Profile/KeepsakeAddFormModal";
 import { AuthContext } from "../../auth/AuthContext";
-import { AlertContext } from "../../Alerts/AlertContext";
 import MemoryCreationPrompt from "../Profile/MemoryCreationPrompt";
 import KeepsakeProfileCard from "../Profile/KeepsakeProfileCard";
 
@@ -20,7 +18,6 @@ import GlobalToast from "../Alert/GlobalToast";
 
 const Profile = () => {
   const { user } = useContext(AuthContext);
-  const { setToast } = useContext(AlertContext);
   const [isLoading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState([]);
   const [deceasedUserData, setDeceasedUserData] = useState([]);
@@ -34,7 +31,7 @@ const Profile = () => {
       .get("http://localhost:4000/user/info", { withCredentials: true })
       .then((res) => {
         // Checks status when from API response. If the status is 400 or above then redirect to login page
-        if (res.status == 200) {
+        if (res.status === 200) {
           setUserData(res.data);
         } else if (res.status >= 400) {
           navigate("/login", { replace: true });
@@ -97,7 +94,7 @@ const Profile = () => {
         </Row>
       </Container>
       <Container>
-        {deceasedUserData.length == 0 ? (
+        {deceasedUserData.length === 0 ? (
           <MemoryCreationPrompt />
         ) : (
           <KeepsakeProfileCard
