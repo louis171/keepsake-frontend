@@ -8,6 +8,11 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import InputGroup from "react-bootstrap/InputGroup";
 import Form from "react-bootstrap/Form";
+import ConfirmModal from "../Modal/ConfirmModal";
+
+// Imports for svgs
+import { ReactComponent as Trash } from "../../Assets/svg/trash.svg";
+import { ReactComponent as Edit } from "../../Assets/svg/edit.svg";
 
 import MemoryAddFormModal from "../Memory/MemoryAddFormModal";
 
@@ -54,6 +59,8 @@ const Memory = () => {
     );
   }, [memoryData, searchValue]);
 
+  const deleteMemoryHandler = () => {};
+
   // Sets state for string search
   const handleSearchChange = (event) => {
     event.preventDefault();
@@ -80,12 +87,11 @@ const Memory = () => {
                     {sqlDateConvert(deceased.deceasedDateOfDeath)}
                   </h3>
                 </div>
-                <div className="my-4">
+                <div className="my-4 h-100">
                   <div
-                    className="mx-auto w-100"
+                    className="mx-auto w-auto"
                     style={{
                       height: "20em",
-                      width: "100%",
                       borderRadius: "2em",
                       backgroundImage: `url(${deceased.deceasedimage[0].deceasedImagePath})`,
                       backgroundRepeat: "no-repeat",
@@ -159,6 +165,16 @@ const Memory = () => {
                   >
                     {new Date(memory.memoryUpdated).toDateString()}
                   </p>
+                </div>
+                <div className="d-flex justify-content-center">
+                  <ConfirmModal
+                    title="Delete Memory"
+                    body="Are you sure you want to delete this Memory?"
+                    variant="danger"
+                    buttonContent={<Trash />}
+                    functionOnConfirm={deleteMemoryHandler}
+                    data={memory}
+                  />
                 </div>
               </div>
             </Col>

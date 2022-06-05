@@ -58,7 +58,7 @@ const AuthContextProvider = (props) => {
 
   return (
     <AuthContext.Provider
-      value={{ userSigninHandler, userSignOutHandler, user }}
+      value={{ userSigninHandler, userSignOutHandler, user, setUser }}
     >
       {props.children}
     </AuthContext.Provider>

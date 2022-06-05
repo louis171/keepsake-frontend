@@ -17,7 +17,8 @@ import KeepsakeProfileCard from "../Profile/KeepsakeProfileCard";
 import { ToastContainer, toast } from "react-toastify";
 
 const Profile = () => {
-  const { user } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
+
   const [isLoading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState([]);
   const [deceasedUserData, setDeceasedUserData] = useState([]);
@@ -34,6 +35,17 @@ const Profile = () => {
         if (res.status === 200) {
           setUserData(res.data);
         } else if (res.status >= 400) {
+          navigate("/login", { replace: true });
+        }
+      })
+      .catch((err) => {
+        if (err.response.status >= 400) {
+          setUser({
+            userForename: "",
+            userSurname: "",
+            userId: null,
+            auth: false,
+          });
           navigate("/login", { replace: true });
         }
       });

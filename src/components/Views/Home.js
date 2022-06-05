@@ -35,7 +35,7 @@ const Home = () => {
   useEffect(() => {
     axios({
       method: "get",
-      url: `http://localhost:4000/deceased/all`,
+      url: `http://localhost:4000/deceased/quantity?quantity=4`,
     }).then((response) => {
       setDeceasedData(response.data);
       if (isLoading) {

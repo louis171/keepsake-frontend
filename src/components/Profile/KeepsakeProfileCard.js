@@ -74,7 +74,10 @@ const KeepsakeProfileCard = (props) => {
             className="bg-light p-2 mt-4 rounded shadow-sm"
             key={deceased.deceasedId}
           >
-            <div onClick={() => navigate(`/memory/${deceased.deceasedId}`)}>
+            <div
+              style={{ cursor: "pointer" }}
+              onClick={() => navigate(`/memory/${deceased.deceasedId}`)}
+            >
               <div className="d-flex align-items-center">
                 <div
                   className="me-3"
@@ -131,6 +134,7 @@ const KeepsakeProfileCard = (props) => {
               >
                 <Edit />
               </Button>
+
               <ConfirmModal
                 title="Delete Keepsake"
                 body="Are you sure you want to delete this Keepsake?"

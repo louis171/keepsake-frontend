@@ -19,8 +19,8 @@ const MemoryAddFormModal = (props) => {
 
   const [modalShow, setModalShow] = useState(false);
   // States for user input
-  const [memoryForename, setMemoryForename] = useState("");
-  const [memorySurname, setMemorySurname] = useState("");
+  const [memoryForename, setMemoryForename] = useState(user.userForename);
+  const [memorySurname, setMemorySurname] = useState(user.userSurname);
   const [memoryBody, setMemoryBody] = useState("");
   const [userImage, setUserImage] = useState({ image: null });
 
