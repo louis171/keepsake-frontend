@@ -14,7 +14,7 @@ import { AuthContext } from "../../auth/AuthContext";
 import MemoryCreationPrompt from "../Profile/MemoryCreationPrompt";
 import KeepsakeProfileCard from "../Profile/KeepsakeProfileCard";
 
-import GlobalToast from "../Alert/GlobalToast";
+import { ToastContainer, toast } from "react-toastify";
 
 const Profile = () => {
   const { user } = useContext(AuthContext);
@@ -61,7 +61,7 @@ const Profile = () => {
 
   return (
     <>
-      <GlobalToast />
+      <ToastContainer />
       <Container>
         <Row>
           <Col sm={12} md={12} lg={6}>
@@ -89,7 +89,7 @@ const Profile = () => {
             md={6}
             lg={6}
           >
-            <KeepsakeAddFormModal setRefresh={setRefresh} />
+            <KeepsakeAddFormModal toast={toast} setRefresh={setRefresh} />
           </Col>
         </Row>
       </Container>
@@ -98,6 +98,7 @@ const Profile = () => {
           <MemoryCreationPrompt />
         ) : (
           <KeepsakeProfileCard
+            toast={toast}
             setFilteredKeepsakes={setFilteredKeepsakes}
             filteredKeepsakes={filteredKeepsakes}
           />

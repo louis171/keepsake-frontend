@@ -8,11 +8,9 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 
 import { AuthContext } from "../../auth/AuthContext";
-import { AlertContext } from "../../Alerts/AlertContext";
 
 const KeepsakeAddFormModal = (props) => {
   const { user } = useContext(AuthContext);
-  const { setToast } = useContext(AlertContext);
 
   const [modalShow, setModalShow] = useState(false);
   // States for user input
@@ -58,21 +56,27 @@ const KeepsakeAddFormModal = (props) => {
           { withCredentials: true }
         )
         .then((res) => {
-          setToast({
-            title: "Success",
-            body: "Added Keepsake",
-            show: true,
-            variant: "success",
+          props.toast.success("Success!", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
           });
           setModalShow(false);
           props.setRefresh(true);
         })
         .catch((err) => {
-          setToast({
-            title: "Failed",
-            body: "User action failed",
-            show: true,
-            variant: "danger",
+          props.toast.error("Error. Please try again", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
           });
           console.log(err);
         });

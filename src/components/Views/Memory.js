@@ -11,7 +11,7 @@ import Form from "react-bootstrap/Form";
 
 import MemoryAddFormModal from "../Memory/MemoryAddFormModal";
 
-import GlobalToast from "../Alert/GlobalToast";
+import { ToastContainer, toast } from "react-toastify";
 
 const Memory = () => {
   const [deceasedData, setDeceasedData] = useState([]);
@@ -62,7 +62,7 @@ const Memory = () => {
 
   return (
     <>
-    <GlobalToast />
+      <ToastContainer />
       <Container>
         <Row className="mb-4">
           <Col>
@@ -103,7 +103,7 @@ const Memory = () => {
         <Row>
           <Col className="d-flex flex-column justify-content-between text-center bg-light rounded border shadow-sm p-2">
             <h1 className="m-0 p-0 mb-4">Memories</h1>
-            <MemoryAddFormModal setRefresh={setRefresh} />
+            <MemoryAddFormModal toast={toast} setRefresh={setRefresh} />
             <InputGroup className="mt-4">
               <Form.Control
                 onChange={handleSearchChange}
