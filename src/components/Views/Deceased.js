@@ -13,10 +13,11 @@ const Deceased = () => {
     }).then((response) => {
       console.log(response.data);
       console.log(deceasedId)
+      setData(response.data)
     });
   }, []);
 
-  return <div>Deceased</div>;
+  return <div>Hello</div>;
 };
 
 export default Deceased;

@@ -122,7 +122,7 @@ const Home = () => {
                       {getExcerpt(deceased.deceasedDetails, 100).shortText}
                     </Card.Text>
                     <Button
-                      onClick={() => navigate("/deceased:ncoW3hs9AmhjFddr", { replace: true })}
+                      onClick={() => navigate(`/deceased/${deceased.deceasedId}`, { replace: true })}
                       variant="primary"
                     >
                       Visit memory page
