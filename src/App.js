@@ -4,8 +4,11 @@ import Home from "./components/Views/Home";
 import About from "./components/Views/About";
 import Login from "./components/Views/Login";
 import Register from "./components/Views/Register";
-import Deceased from "./components/Views/Deceased";
-import NoMatch from "./components/Views/NoMatch";
+import Memory from "./components/Views/Memory";
+import NoRouteMatch from "./components/Views/NoRouteMatch";
+import Profile from "./components/Views/Profile";
+import ProtectedRoute from "./auth/ProtectedRoutes";
+import Logout from "./components/Views/Logout";
 
 function App() {
   return (
@@ -14,13 +17,22 @@ function App() {
         <Route index element={<Home />} />
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route path="/deceased">
-          <Route path=":deceasedId" element={<Deceased />} />
+        <Route path="/memory">
+          <Route path=":deceasedId" element={<Memory />} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/register" element={<Register />} />
-        <Route path="*" element={<NoMatch />} />
+
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="*" element={<NoRouteMatch />} />
       </Routes>
     </Layout>
   );
