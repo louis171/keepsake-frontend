@@ -18,6 +18,7 @@ function App() {
           <Route path=":deceasedId" element={<Deceased />} />
         </Route>
         <Route path="/login" element={<Login />} />
+        <Route path="/logout" element={<Logout />} />
         <Route path="/register" element={<Register />} />
         <Route path="*" element={<NoMatch />} />
       </Routes>

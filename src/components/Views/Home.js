@@ -1,6 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { useNavigate } from "react-router-dom";
+import { sqlDateConvert } from "../../helpers/helpers";
+import axios from "axios";
+
+import Loading from "./Loading";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -12,75 +16,69 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Nav from "react-bootstrap/Nav";
 import Carousel from "react-bootstrap/Carousel";
+import InputGroup from "react-bootstrap/InputGroup";
+import Form from "react-bootstrap/Form";
+import Pagination from "react-bootstrap/Pagination";
 
-import { getExcerpt } from "../../helpers/getExerpt";
+import { LinkContainer } from "react-router-bootstrap";
 
-const DUMMY_DATA = [
-  {
-    deceasedId: "ncoW3hs9AmhjFddr",
-    deceasedForename: "Phil",
-    deceasedMiddlename: "Hubert",
-    deceasedSurname: "Davidson",
-    deceasedDateOfBirth: "1986-04-23",
-    deceasedDateOfDeath: "2022-05-08",
-    deceasedDetails:
-      "Sed vel augue turpis. Ut vitae congue enim. Nam scelerisque tincidunt tristique. Maecenas id nulla est. Fusce quam lorem, cursus sed bibendum a, vulputate nec elit. Sed porttitor sodales pulvinar. Pellentesque et blandit lorem. Vestibulum maximus vel libero at sagittis.",
-    deceasedimage: [
-      {
-        deceasedImageId: "tvfzX8eCrzeCq0EZ",
-        deceasedImagePath:
-          "http://localhost:4000/public/29crdsvOwd1uryyZ!avatar-d6946071babd8fc529587de417f4b03c.jpg",
-        deceasedImageName: "avatar-67c27da1ff9f4f182bec46d9e933ff9c.jpg",
-      },
-    ],
-  },
-  {
-    deceasedId: "rwd4Do0cWTujCnju",
-    deceasedForename: "Jerry",
-    deceasedMiddlename: "",
-    deceasedSurname: "Johnson",
-    deceasedDateOfBirth: "1944-11-03",
-    deceasedDateOfDeath: "2022-04-18",
-    deceasedDetails:
-      "Aenean justo orci, ullamcorper at congue ut, feugiat ut augue. Nam magna eros, rhoncus sit amet interdum ac, pretium et massa. Vivamus nec magna justo. Curabitur a nunc nec orci cursus fermentum elementum et mauris. Vestibulum eu pellentesque dolor.",
-    deceasedimage: [
-      {
-        deceasedImageId: "29crdsvOwd1uryyZ",
-        deceasedImagePath:
-          "http://localhost:4000/public/tvfzX8eCrzeCq0EZ!avatar-67c27da1ff9f4f182bec46d9e933ff9c.jpg",
-        deceasedImageName: "avatar-d6946071babd8fc529587de417f4b03c.jpg",
-      },
-    ],
-  },
-  {
-    deceasedId: "rwd4Do0cWTujCnku",
-    deceasedForename: "David",
-    deceasedMiddlename: "",
-    deceasedSurname: "Jackson",
-    deceasedDateOfBirth: "1976-04-23",
-    deceasedDateOfDeath: "2022-04-25",
-    deceasedDetails:
-      "Quisque mollis pellentesque dictum. Sed ex odio, ultrices eget enim eget, mattis cursus risus. Mauris consectetur ipsum id ultrices viverra. Nunc mollis luctus leo a efficitur. Morbi ligula lectus, consequat fringilla placerat ac, eleifend id metus. Fusce euismod urna ac lacinia mattis. Nulla convallis massa nec nisl posuere congue. Nulla eu venenatis mauris, id luctus ante. Pellentesque ut orci ac leo congue ultricies id vitae est.",
-    deceasedimage: [
-      {
-        deceasedImageId: "3cW7akYoYLOohA_V",
-        deceasedImagePath:
-          "http://localhost:4000/public/3cW7akYoYLOohA_V!pexels-andrea-piacquadio-3831612.jpg",
-        deceasedImageName: "pexels-andrea-piacquadio-3831612.jpg",
-      },
-    ],
-  },
-];
+import { getExcerpt } from "../../helpers/helpers";
 
 const Home = () => {
-  const [key, setKey] = useState("home");
+  const [isLoading, setIsLoading] = useState(true);
+  const [deceasedData, setDeceasedData] = useState([]);
+  const [filteredDeceasedData, setFilteredDeceasedData] = useState([]);
+  // States for filters/options
+  const [searchValue, setSearchValue] = useState("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: `http://localhost:4000/deceased/quantity?quantity=4`,
+    }).then((response) => {
+      setDeceasedData(response.data);
+      if (isLoading) {
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 1000);
+      }
+    });
+  }, []);
+
+  // useEffect for filtering by search string
+  useEffect(() => {
+    setFilteredDeceasedData(
+      deceasedData.filter((deceased) => {
+        return (
+          deceased.deceasedForename
+            .toLowerCase()
+            .includes(searchValue.toLowerCase()) ||
+          deceased.deceasedSurname
+            .toLowerCase()
+            .includes(searchValue.toLowerCase())
+        );
+      })
+    );
+  }, [deceasedData, searchValue]);
+
+  // Sets state for string search
+  const handleSearchChange = (event) => {
+    event.preventDefault();
+    setSearchValue(event.target.value);
+  };
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
     <Container fluid="lg" className="mt-4">
       <Row className="d-block h-100 d-md-flex mb-5">
         <Col className="h-100 m-auto mb-4 d-md-block">
           <Image
-            className="rounded-pill w-100"
+            style={{ borderRadius: "4rem" }}
+            className="w-100"
             src="https://images.pexels.com/photos/1807891/pexels-photo-1807891.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
           ></Image>
         </Col>
@@ -96,9 +94,9 @@ const Home = () => {
       </Row>
       <Row>
         <Col>
-          <h1 className="text-center">Recent memories</h1>
+          <h2 className="text-center">Recent Keepsakes</h2>
           <Carousel variant="dark">
-            {DUMMY_DATA.map((deceased) => (
+            {deceasedData.map((deceased) => (
               <Carousel.Item key={deceased.deceasedId}>
                 <Card className="w-75 mx-auto border-0 mb-4">
                   <Image
@@ -125,7 +123,7 @@ const Home = () => {
                       onClick={() => navigate(`/deceased/${deceased.deceasedId}`, { replace: true })}
                       variant="primary"
                     >
-                      Visit memory page
+                      Visit Keepsake
                     </Button>
                   </Card.Body>
                 </Card>
@@ -134,8 +132,85 @@ const Home = () => {
           </Carousel>
         </Col>
       </Row>
+      <Row className="my-4 py-3 bg-light border shadow-sm">
+        <Col sm={12} md={12} lg={6}>
+          <div className="mb-4">
+            <div>
+              <h2 className="display-3">
+                What is <span style={{ fontWeight: "bold" }}>Keep</span>sake?
+              </h2>
+            </div>
+            <div>
+              <p className="lead">
+                Keepsake offers a place to store your loved one cherished
+                memories and condolences from people all over the world
+              </p>
+            </div>
+          </div>
+        </Col>
+        <Col className="text-center justify-content-center" sm={12} md={12} lg={12}>
+          <div className="mb-4">
+            <h3>Get started by creating your own Keepsake today</h3>
+          </div>
+          <LinkContainer to="/register">
+            <Button className="w-50" size="lg" variant="primary">
+              Get started
+            </Button>
+          </LinkContainer>
+        </Col>
+      </Row>
       <Row>
-        <Col></Col>
+        <Col sm={12} md={12} lg={6} className="mx-lg-auto">
+          <h3 className="text-center">Search for Keepsakes</h3>
+          <InputGroup>
+            <Form.Control
+              onChange={handleSearchChange}
+              value={searchValue}
+              placeholder="Search by name"
+              aria-label="Search"
+            />
+          </InputGroup>
+        </Col>
+      </Row>
+      <Row>
+        <Col sm={12} md={12} lg={6} className="mx-lg-auto">
+          {filteredDeceasedData.map((deceased) => (
+            <div
+              key={deceased.deceasedId}
+              onClick={() => navigate(`/memory/${deceased.deceasedId}`)}
+            >
+              <div className="d-flex align-items-center">
+                <div
+                  className="mt-2 me-2"
+                  style={{
+                    height: "6em",
+                    width: "6em",
+                    borderRadius: ".5em",
+                    backgroundImage: `url(${deceased.deceasedimage[0].deceasedImagePath})`,
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "center",
+                    backgroundSize: "cover",
+                  }}
+                ></div>
+                <div>
+                  <h4 className="m-0 p-0 text-primary">
+                    {deceased.deceasedForename} {deceased.deceasedMiddlename}{" "}
+                    {deceased.deceasedSurname}
+                  </h4>
+                  <p
+                    style={{ fontSize: ".875rem" }}
+                    className="m-0 p-0 text-muted"
+                  >
+                    {sqlDateConvert(deceased.deceasedDateOfBirth)}
+                    {" - "}
+                    {sqlDateConvert(deceased.deceasedDateOfDeath)}
+                  </p>
+                </div>
+              </div>
+              <hr className="w-100 my-2" />
+            </div>
+          ))}
+        </Col>
       </Row>
     </Container>
   );
