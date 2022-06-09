@@ -21,10 +21,6 @@ const KeepsakeProfileCard = (props) => {
   const navigate = useNavigate();
 
   const deleteKeepsakeHandler = (keepsake) => {
-    const value = filteredKeepsakes.filter((filteredKeepsake) => {
-      return filteredKeepsake.deceasedId !== keepsake.deceasedId;
-    });
-    props.setFilteredKeepsakes(value);
     axios
       .delete(
         `http://localhost:4000/deceased/delete?deceasedId=${keepsake.deceasedId}`
@@ -40,6 +36,10 @@ const KeepsakeProfileCard = (props) => {
             draggable: true,
             progress: undefined,
           });
+          const value = filteredKeepsakes.filter((filteredKeepsake) => {
+            return filteredKeepsake.deceasedId !== keepsake.deceasedId;
+          });
+          props.setFilteredKeepsakes(value);
         } else if (res.status >= 400) {
           props.toast.error("Error. Please try again", {
             position: "top-right",
