@@ -9,6 +9,7 @@ import Button from "react-bootstrap/Button";
 import axios from "axios";
 
 import ConfirmModal from "../Modal/ConfirmModal";
+import KeepsakeEditFormModal from "./KeepsakeEditFormModal";
 
 // Imports for svgs
 import { ReactComponent as Trash } from "../../Assets/svg/trash.svg";
@@ -16,14 +17,15 @@ import { ReactComponent as Edit } from "../../Assets/svg/edit.svg";
 
 const KeepsakeProfileCard = (props) => {
   // Destructuring props
-  const { filteredKeepsakes, toast } = props;
+  const { filteredKeepsakes, toast, setRefresh } = props;
 
   const navigate = useNavigate();
 
   const deleteKeepsakeHandler = (keepsake) => {
     axios
       .delete(
-        `http://localhost:4000/deceased/delete?deceasedId=${keepsake.deceasedId}`
+        `http://localhost:4000/deceased/delete?deceasedId=${keepsake.deceasedId}`,
+        { withCredentials: true }
       )
       .then((res) => {
         if (res.status == 200) {
@@ -103,13 +105,11 @@ const KeepsakeProfileCard = (props) => {
               </div>
             </div>
             <div className="d-flex justify-content-center">
-              <Button
-                style={{ borderRadius: ".25em 0 0 .25em" }}
-                as={Col}
-                variant="primary"
-              >
-                <Edit />
-              </Button>
+              <KeepsakeEditFormModal
+                setRefresh={setRefresh}
+                toast={toast}
+                deceased={deceased}
+              />
 
               <ConfirmModal
                 title="Delete Keepsake"

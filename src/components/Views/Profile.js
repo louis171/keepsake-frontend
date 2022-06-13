@@ -110,6 +110,7 @@ const Profile = () => {
           <MemoryCreationPrompt />
         ) : (
           <KeepsakeProfileCard
+            setRefresh={setRefresh}
             toast={toast}
             setFilteredKeepsakes={setFilteredKeepsakes}
             filteredKeepsakes={filteredKeepsakes}
