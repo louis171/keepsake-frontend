@@ -14,6 +14,8 @@ import FloatingLabel from "react-bootstrap/FloatingLabel";
 
 import { AuthContext } from "../../auth/AuthContext";
 
+import { ToastContainer, toast } from "react-toastify";
+
 const Login = () => {
   const { userSigninHandler } = useContext(AuthContext);
   const [validated, setValidated] = useState(false);
@@ -39,6 +41,7 @@ const Login = () => {
       style={{ height: "calc(100vh - 72px)" }}
       className="d-flex w-100 justify-content-center align-items-center"
     >
+      <ToastContainer />
       <Row className="w-100">
         <Col sm={12} md={12} lg={6} className="m-lg-auto">
           <Form
@@ -88,7 +91,10 @@ const Login = () => {
                 Submit
               </Button>
             </div>
-            <div onClick={() => navigate('/register')} className="text-center mt-2">
+            <div
+              onClick={() => navigate("/register")}
+              className="text-center mt-2"
+            >
               <p className="m-0 p-0 text-muted">
                 Don't have an account?{" "}
                 <span className="text-decoration-underline text-primary">

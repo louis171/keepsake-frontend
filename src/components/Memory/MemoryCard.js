@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import axios from "axios";
 
 import Col from "react-bootstrap/Col";
@@ -6,11 +6,15 @@ import Button from "react-bootstrap/Button";
 
 import ConfirmModal from "../Modal/ConfirmModal";
 
+import { AuthContext } from "../../auth/AuthContext";
+
 // Imports for svgs
 import { ReactComponent as Trash } from "../../Assets/svg/trash.svg";
 import { ReactComponent as Edit } from "../../Assets/svg/edit.svg";
 
 const MemoryCard = (props) => {
+  const { user } = useContext(AuthContext);
+
   const { filteredMemoryData, setFilteredMemoryData, toast } = props;
 
   const deleteMemoryHandler = (memory) => {
@@ -105,23 +109,25 @@ const MemoryCard = (props) => {
             {new Date(memory.memoryUpdated).toDateString()}
           </p>
         </div>
-        <div className="d-flex justify-content-center">
-          <Button
-            style={{ borderRadius: ".25em 0 0 .25em" }}
-            as={Col}
-            variant="primary"
-          >
-            <Edit />
-          </Button>
-          <ConfirmModal
-            title="Delete Memory"
-            body="Are you sure you want to delete this Memory?"
-            variant="danger"
-            buttonContent={<Trash />}
-            functionOnConfirm={deleteMemoryHandler}
-            data={memory}
-          />
-        </div>
+        {user.auth ? (
+          <div className="d-flex justify-content-center">
+            <Button
+              style={{ borderRadius: ".25em 0 0 .25em" }}
+              as={Col}
+              variant="primary"
+            >
+              <Edit />
+            </Button>
+            <ConfirmModal
+              title="Delete Memory"
+              body="Are you sure you want to delete this Memory?"
+              variant="danger"
+              buttonContent={<Trash />}
+              functionOnConfirm={deleteMemoryHandler}
+              data={memory}
+            />
+          </div>
+        ) : null}
       </div>
     </Col>
   ));

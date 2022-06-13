@@ -20,7 +20,7 @@ const Memory = () => {
   const [filteredMemoryData, setFilteredMemoryData] = useState([]);
   // States for filters/options
   const [searchValue, setSearchValue] = useState("");
-  // Gets deceasedId from URL
+  // Gets deceasedId param from URL
   let { deceasedId } = useParams();
 
   const [refresh, setRefresh] = useState(false);
