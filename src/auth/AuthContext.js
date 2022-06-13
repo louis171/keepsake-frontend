@@ -1,4 +1,4 @@
-import { useState, createContext, useEffect } from "react";
+import { useState, createContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -44,21 +44,26 @@ const AuthContextProvider = (props) => {
   const userSignOutHandler = () => {
     axios
       .post("http://localhost:4000/auth/signout", {}, { withCredentials: true })
-      .then((res) => (res.status == 200 ? navigate("/") : navigate("/logout")))
-      .then(
+      .then((res) => {
         setUser({
           userForename: "",
           userSurname: "",
           userId: null,
           auth: false,
-        })
-      )
+        });
+        res.status == 200 ? navigate("/") : navigate("/logout");
+      })
       .catch((err) => console.error(err));
   };
 
   return (
     <AuthContext.Provider
-      value={{ userSigninHandler, userSignOutHandler, user, setUser }}
+      value={{
+        userSigninHandler,
+        userSignOutHandler,
+        user,
+        setUser,
+      }}
     >
       {props.children}
     </AuthContext.Provider>

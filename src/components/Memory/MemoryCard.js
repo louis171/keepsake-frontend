@@ -25,42 +25,18 @@ const MemoryCard = (props) => {
       )
       .then((res) => {
         if (res.status == 200) {
-          toast.success("Success! Memory deleted", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
+          toast.success("Success! Memory deleted");
           const value = filteredMemoryData.filter((filteredMemory) => {
             return filteredMemory.memoryId !== memory.memoryId;
           });
           setFilteredMemoryData(value);
         } else if (res.status >= 400) {
-          toast.error("Error. Please try again", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
+          toast.error("Error. Please try again");
         }
       })
       .catch((err) => {
         console.log(err);
-        toast.error("Error. Please try again", {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        toast.error("Error. Please try again");
       });
   };
 

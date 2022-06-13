@@ -1,14 +1,10 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Image from "react-bootstrap/Image";
-import Tab from "react-bootstrap/Tab";
-import Tabs from "react-bootstrap/Tabs";
-import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
-import Nav from "react-bootstrap/Nav";
 import Form from "react-bootstrap/Form";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 
@@ -17,8 +13,7 @@ import { AuthContext } from "../../auth/AuthContext";
 import { ToastContainer, toast } from "react-toastify";
 
 const Login = () => {
-  const { userSigninHandler } = useContext(AuthContext);
-  const [validated, setValidated] = useState(false);
+  const { setUser } = useContext(AuthContext);
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
 
@@ -26,13 +21,43 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    e.stopPropagation();
     const form = e.currentTarget;
+    // Checks form validity. If false displays error toast
     if (form.checkValidity() === false) {
-      e.preventDefault();
-      e.stopPropagation();
-    } else {
-      setValidated(true);
-      userSigninHandler({ userEmail, userPassword });
+      toast.error("Error. Please enter login details");
+      // If validity is true then starts auth procedure
+    } else if (form.checkValidity() === true) {
+      axios
+        .post(
+          "http://localhost:4000/auth/signin",
+          {
+            userEmail: userEmail,
+            userPassword: userPassword,
+          },
+          { withCredentials: true }
+        )
+        .then((res) => {
+          // On successful POST sets user details to authContext
+          setUser({
+            userForename: res.data.user.userForename,
+            userSurname: res.data.user.userSurname,
+            userId: res.data.user.userId,
+            auth: true,
+          });
+          res.status == 200 ? navigate("/profile") : navigate("/");
+          // Displays sucess toast on res.status == 200
+          if (res.status === 200) {
+            toast.success("Login Successfull");
+            // If any falsey status code then display error toast
+          } else if (res.status >= 400) {
+            toast.error("Error. Please try again");
+          }
+        })
+        .catch((err) => {
+          // if any axios error then assume incorrect login details
+          toast.error("Error. Incorrect email or password");
+        });
     }
   };
 
@@ -41,12 +66,11 @@ const Login = () => {
       style={{ height: "calc(100vh - 72px)" }}
       className="d-flex w-100 justify-content-center align-items-center"
     >
-      <ToastContainer />
+      <ToastContainer autoClose={3000} />
       <Row className="w-100">
         <Col sm={12} md={12} lg={6} className="m-lg-auto">
           <Form
             noValidate
-            validated={validated}
             onSubmit={handleSubmit}
             className="bg-light p-2 border shadow-sm"
           >
@@ -60,9 +84,6 @@ const Login = () => {
                   onChange={(e) => setUserEmail(e.target.value)}
                   value={userEmail}
                 />
-                <Form.Control.Feedback type="invalid">
-                  Please enter your email.
-                </Form.Control.Feedback>
               </FloatingLabel>
             </Form.Group>
 
@@ -75,9 +96,6 @@ const Login = () => {
                   type="password"
                   placeholder="Password"
                 />
-                <Form.Control.Feedback type="invalid">
-                  Please enter your password.
-                </Form.Control.Feedback>
               </FloatingLabel>
             </Form.Group>
             <Form.Group
@@ -86,8 +104,8 @@ const Login = () => {
             >
               <Form.Check type="checkbox" label="Remember me" />
             </Form.Group>
-            <div className="d-flex justify-content-center">
-              <Button variant="primary" type="submit">
+            <div className="d-grid gap-2">
+              <Button size="lg" variant="primary" type="submit">
                 Submit
               </Button>
             </div>

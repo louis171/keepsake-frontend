@@ -16,7 +16,7 @@ import { ReactComponent as Edit } from "../../Assets/svg/edit.svg";
 
 const KeepsakeProfileCard = (props) => {
   // Destructuring props
-  const { filteredKeepsakes } = props;
+  const { filteredKeepsakes, toast } = props;
 
   const navigate = useNavigate();
 
@@ -27,42 +27,18 @@ const KeepsakeProfileCard = (props) => {
       )
       .then((res) => {
         if (res.status == 200) {
-          props.toast.success("Success! Keepsake deleted", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
+          toast.success("Success! Keepsake deleted");
           const value = filteredKeepsakes.filter((filteredKeepsake) => {
             return filteredKeepsake.deceasedId !== keepsake.deceasedId;
           });
           props.setFilteredKeepsakes(value);
         } else if (res.status >= 400) {
-          props.toast.error("Error. Please try again", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
+          toast.error("Error. Please try again");
         }
       })
       .catch((err) => {
         console.log(err);
-        props.toast.error("Error. Please try again", {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        toast.error("Error. Please try again");
       });
   };
 

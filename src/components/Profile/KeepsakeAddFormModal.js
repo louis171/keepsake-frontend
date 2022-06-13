@@ -12,6 +12,8 @@ import { AuthContext } from "../../auth/AuthContext";
 const KeepsakeAddFormModal = (props) => {
   const { user } = useContext(AuthContext);
 
+  const { toast, setRefresh } = props;
+
   const [modalShow, setModalShow] = useState(false);
   // States for user input
   const [deceasedForename, setDeceasedForename] = useState("");
@@ -56,28 +58,12 @@ const KeepsakeAddFormModal = (props) => {
           { withCredentials: true }
         )
         .then((res) => {
-          props.toast.success("Success!", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
+          toast.success("Success!");
           setModalShow(false);
-          props.setRefresh(true);
+          setRefresh(true);
         })
         .catch((err) => {
-          props.toast.error("Error. Please try again", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
+          toast.error("Error. Please try again");
           console.log(err);
         });
     }

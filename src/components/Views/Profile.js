@@ -73,7 +73,7 @@ const Profile = () => {
 
   return (
     <>
-      <ToastContainer />
+      <ToastContainer autoClose={3000} />
       <Container>
         <Row>
           <Col sm={12} md={12} lg={6}>

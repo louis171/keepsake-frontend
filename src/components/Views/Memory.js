@@ -63,7 +63,7 @@ const Memory = () => {
 
   return (
     <>
-      <ToastContainer />
+      <ToastContainer autoClose={3000} />
       <Container>
         <Row className="mb-4">
           <Col>
