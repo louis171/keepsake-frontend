@@ -10,6 +10,8 @@ import FloatingLabel from "react-bootstrap/FloatingLabel";
 
 import axios from "axios";
 
+import { ToastContainer, toast } from "react-toastify";
+
 const Register = () => {
   const navigate = useNavigate();
 
@@ -21,11 +23,13 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    e.stopPropagation();
     const form = e.currentTarget;
+    // Checks form validity. If false displays error toast
     if (form.checkValidity() === false) {
-      e.preventDefault();
-      e.stopPropagation();
-    } else {
+      toast.error("Error. Please enter registration details");
+      // If validity is true then starts auth procedure
+    } else if (form.checkValidity() === true) {
       setValidated(true);
       axios
         .post("http://localhost:4000/auth/signup", {
@@ -35,22 +39,33 @@ const Register = () => {
           userPassword: userPassword,
         })
         .then((res) => {
+          // Displays sucess toast on res.status == 201
+          if (res.status === 201) {
+            toast.success("Login Successfull");
+            // If any falsey status code then display error toast
+          } else if (res.status >= 400) {
+            toast.error("Error. Please try again");
+          }
           res.status === 201 ? navigate("/login") : navigate("/register");
+        })
+        .catch((err) => {
+          // if any axios error then assume email is already in use
+          toast.error(err.response.data.message);
         });
     }
   };
 
   return (
     <Container
-    style={{ height: "calc(100vh - 72px)" }}
-    fluid='lg'
-    className="d-flex w-100 justify-content-center align-items-center"
+      style={{ height: "calc(100vh - 72px)" }}
+      fluid="lg"
+      className="d-flex w-100 justify-content-center align-items-center"
     >
+      <ToastContainer autoClose={3000} />
       <Row className="w-100">
         <Col sm={12} md={12} lg={6} className="m-lg-auto">
           <Form
             noValidate
-            validated={validated}
             onSubmit={handleSubmit}
             className="bg-light p-2 border shadow-sm"
           >
@@ -63,9 +78,6 @@ const Register = () => {
                   type="text"
                   placeholder="First name"
                 />
-                <Form.Control.Feedback type="invalid">
-                  Please enter your first name.
-                </Form.Control.Feedback>
               </FloatingLabel>
             </Form.Group>
             <Form.Group className="mb-3" controlId="formSurname">
@@ -76,9 +88,6 @@ const Register = () => {
                   type="text"
                   placeholder="Last name"
                 />
-                <Form.Control.Feedback type="invalid">
-                  Please enter your last name.
-                </Form.Control.Feedback>
               </FloatingLabel>
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -89,9 +98,6 @@ const Register = () => {
                   type="email"
                   placeholder="name@example.com"
                 />
-                <Form.Control.Feedback type="invalid">
-                  Please enter your email.
-                </Form.Control.Feedback>
               </FloatingLabel>
             </Form.Group>
 
@@ -103,9 +109,6 @@ const Register = () => {
                   type="password"
                   placeholder="Password"
                 />
-                <Form.Control.Feedback type="invalid">
-                  Please enter your password.
-                </Form.Control.Feedback>
               </FloatingLabel>
             </Form.Group>
             <Form.Group
