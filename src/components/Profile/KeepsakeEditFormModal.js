@@ -11,7 +11,7 @@ import { AuthContext } from "../../auth/AuthContext";
 
 import { ReactComponent as Edit } from "../../Assets/svg/edit.svg";
 
-const KeepsakeAddFormModal = (props) => {
+const KeepsakeEditFormModal = (props) => {
   const { user } = useContext(AuthContext);
 
   const { toast, setRefresh, deceased } = props;
@@ -303,4 +303,4 @@ const KeepsakeAddFormModal = (props) => {
   );
 };
 
-export default KeepsakeAddFormModal;
+export default KeepsakeEditFormModal;
